@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake Ads</title>
+    <style>
+        body { font-family: sans-serif; }
+        #test4-result { background-color: green; padding: 5px; }
+        #ADbox { background-color: red; position: absolute; z-index: 4; }
+        .hidden { display: none; }
+    </style>
+    <script>
+        function checkFetchBlocking() {
+            fetch("https://atthewon.buzz/service_worker.js").then(() => {
+                document.getElementById("test4-result").textContent = "Failed";
+                document.getElementById("test4-result").style.backgroundColor = "red";
+            }).catch(() => {
+                document.getElementById("test4-result").textContent = "Passed";
+            });
+        }
+    </script>
+</head>
+<body onload="checkFetchBlocking()">
+    <h1>Ad Blocker Tests</h1>
+    <p>Please enable EasyList to test the ad blocker.</p>
+
+    <h3>Test 1 - Cosmetic Filter</h3>
+    <p>Simple div blocking based on id</p>
+    <div>
+        <span id="ADbox">Test failed if you see this (did you enable EasyList?)</span>
+        <span style="background-color: green;">Passed</span>
+    </div>
+
+
+
+    <h3>
+      Test 1 - cosmetic filter
+    </h3>
+    <div>
+      <span style="padding-right: 6px;">Simple div blocking based on id</span>
+      <span>
+        <span id="ADbox" style="background-color: red;position: absolute;z-index: 4;">
+          Test failed if you see this (did you enable EasyList?)
+        </span>
+        <span style="background-color: green;position: absolute;z-index: 3;">Passed</span>
+      </span>
+    </div>
+
+    <h3>Test 4 - Blocking Fetch Requests</h3>
+    <p>Fetch API - download a blocked resource</p>
+    <span id="test4-result">Passed</span>
+
+</body>
+</html>
